@@ -6,19 +6,12 @@ describe('Verifying package-lock.json integrity', function() {
   beforeEach(util.setup);
   afterEach(util.cleanup);
 
-  it('should be a function', function() {
-    var fs = util.fs();
-    expect(fs.writeFile).to.be.a('function');
-    expect(fs.readFile).to.be.a('function');
-  });
-
   it('package-lock.json is different from git version, a dependency may be missing or not installed', function(done) {
     var fs = util.fs();
 
-    var check = md5(data);
-  
     fs.readFile('./package-lock.json', 'utf8', function(error, data) {
-      expect(check).to.equal(data);
+      var check = md5(data);
+      expect(check).to.equal(ogmd5);
       done();
     });
   });
